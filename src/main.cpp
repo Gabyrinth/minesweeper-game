@@ -18,14 +18,15 @@ int main(){
         if (IsMouseButtonPressed(0)){
             std::cout << "Left click pressed";
             Vector2 pos = grid.get(mouse_pos);
-            std::cout << grid.grid[pos.x][pos.y] << "\n";
-            grid.grid[pos.x][pos.y] = 1;
         }
         BeginDrawing();
         ClearBackground(WHITE);
         grid.draw();
         grid.hover(mouse_pos);
         EndDrawing();
+        BeginTextureMode();
+        
+        EndTextureMode();
     }
     CloseWindow();
 }
