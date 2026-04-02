@@ -1,19 +1,32 @@
 #include "cell.hpp"
 
 Cell::Cell(int x, int y, int size){
-    this->position = Vector2{(float) x, (float) y};
     this->size = size;
-    this->isMine = false;
-    this->isFlagged = false;
-    this->neighbor = 0;
-    this->isSearched = false;
+    position = Vector2{(float) x, (float) y};
+    isMine = false;
+    isFlagged = false;
+    neighbor = 0;
+    isSearched = false;
+    tilecolor = color[0];
 }
 
 void Cell::draw(){
-    DrawRectangle(position.x, position.y, size, size, color[0]);
+    DrawRectangle(position.x, position.y, size, size, tilecolor);
+
+    if (isFlagged){
+        DrawTexture(texture, position.x, position.y, WHITE);
+    }
 }
 
-void Cell::drawTexture(){
-    DrawText(getImages(0));
+void Cell::flagCell(){
+    if (isSearched) return;
+    if (isFlagged) return;
+
+    texture = getImages()[1];
+    isFlagged = true;
 }
 
+void Cell::searchCell(){
+    tilecolor = color[2];
+    isSearched = true;
+}
