@@ -7,8 +7,10 @@ Grid::Grid(Vector2 offset, Vector2 axis, int cellSize){
     col = axis.y;
 
     nearestNeighbor = {{-1,-1},{0,-1},{1,-1},{-1,0}, {1,0},{-1,1}, {0,1}, {1,1}};
+    searchNeighbor = {{0,-1}, {-1,0}, {1,0}, {0,1}};
     
     init();
+    mineDeploy();
 }
 
 // can be use to reset
@@ -54,12 +56,38 @@ void Grid::Search(Vector2 pos){
 
     Cell &cell = grid[pos.x][pos.y];
 
+    if (cell.isMine){
+        std::cout << "Game Over";
+        return;
+    }
+
+    
     if(cell.isSearched || cell.isFlagged) return;
 
     cell.searchCell();
 
     if (cell.neighbor > 0) return;
-    for(int i = 0;i < nearestNeighbor.size(); i++){
-        Search(Vector2{pos.x + nearestNeighbor[i][0], pos.y + nearestNeighbor[i][1]});
+    for(int i = 0;i < searchNeighbor.size(); i++){
+        Search(Vector2{pos.x + searchNeighbor[i][0], pos.y + searchNeighbor[i][1]});
+    }
+}
+
+void Grid::mineDeploy(){
+    srand(time(0));
+    int numberOfMines = rand() % 145;
+    for(int i = 0; i < numberOfMines; i++){
+        int r = rand() % row ;
+        int c = rand() % col ;
+        mineLocation.push_back({r,c});
+    }
+
+    for (int i = 0; i < mineLocation.size(); i++){
+        for (int j = 0; j < nearestNeighbor.size(); j++){
+            int rn = mineLocation[i][0] + nearestNeighbor[j][0];
+            int cn = mineLocation[i][1] + nearestNeighbor[j][1];
+            if (rn >= 0 && rn < row && cn >= 0 && cn < col && !grid[rn][cn].isMine){
+                grid[rn][cn].addNeighbor();
+            }
+        }
     }
 }

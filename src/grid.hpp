@@ -3,6 +3,7 @@
 #include <raylib.h>
 #include <vector>
 #include <math.h>
+#include <time.h>
 
 #include "colors.hpp"
 #include "cell.hpp"
@@ -25,10 +26,15 @@ class Grid{
     void Flag(Vector2 pos);
 
     private:
+    // variables
     std::vector<std::vector<Cell>> grid;
     Vector2 offset;
     int row;
     int col;
     int cellSize;
+    std::vector<std::vector<int>> mineLocation;
     std::vector<std::vector<int>> nearestNeighbor;
+    std::vector<std::vector<int>> searchNeighbor;
+    // private methods
+    void mineDeploy();
 };

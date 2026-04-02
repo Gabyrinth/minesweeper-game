@@ -16,6 +16,10 @@ void Cell::draw(){
     if (isFlagged){
         DrawTexture(texture, position.x, position.y, WHITE);
     }
+
+    if (neighbor > 0 && isSearched){
+        DrawText(std::to_string(neighbor).c_str(),position.x, position.y, 22, RED);
+    }
 }
 
 void Cell::flagCell(){
@@ -29,4 +33,14 @@ void Cell::flagCell(){
 void Cell::searchCell(){
     tilecolor = color[2];
     isSearched = true;
+}
+
+void Cell::mineCell(){
+    isMine = true;
+    texture = getImages()[0];
+}
+
+void Cell::addNeighbor(){
+    if (isMine) return;
+    neighbor++;
 }
