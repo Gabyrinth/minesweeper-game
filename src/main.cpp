@@ -13,17 +13,19 @@ int main(){
 
     Grid grid = Grid(offset, axis, cellSize);
 
+    SetTargetFPS(30);
+
     while (WindowShouldClose() == false){
         Vector2 mouse_pos = GetMousePosition();
         if (IsMouseButtonPressed(0)){
             std::cout << "Left click pressed";
             Vector2 pos = grid.get(mouse_pos);
-            grid.grid[pos.x][pos.y].searchCell();
+            grid.Search(pos);
         }
         if (IsMouseButtonPressed(1)){
             std::cout << "Right click pressed";
             Vector2 pos = grid.get(mouse_pos);
-            grid.grid[pos.x][pos.y].flagCell();
+            grid.Flag(pos);
         }
         BeginDrawing();
         ClearBackground(WHITE);

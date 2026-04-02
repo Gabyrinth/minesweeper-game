@@ -5,6 +5,8 @@ Grid::Grid(Vector2 offset, Vector2 axis, int cellSize){
     this->cellSize = cellSize;
     row = axis.x;
     col = axis.y;
+
+    nearestNeighbor = {{-1,-1},{0,-1},{1,-1},{-1,0}, {1,0},{-1,1}, {0,1}, {1,1}};
     
     init();
 }
@@ -41,4 +43,23 @@ Vector2 Grid::get(Vector2 pos){
     c = std::max(0, std::min(c, col - 1));
 
     return {(float) r,(float) c};
+}
+
+void Grid::Flag(Vector2 pos){
+    grid[pos.x][pos.y].flagCell();
+}
+
+void Grid::Search(Vector2 pos){
+    if (pos.x >= row || pos.x < 0 || pos.y >= col || pos.y < 0) return; 
+
+    Cell &cell = grid[pos.x][pos.y];
+
+    if(cell.isSearched || cell.isFlagged) return;
+
+    cell.searchCell();
+
+    if (cell.neighbor > 0) return;
+    for(int i = 0;i < nearestNeighbor.size(); i++){
+        Search(Vector2{pos.x + nearestNeighbor[i][0], pos.y + nearestNeighbor[i][1]});
+    }
 }

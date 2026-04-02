@@ -9,16 +9,26 @@
 
 class Grid{
     public:
+
     Grid(Vector2 offset, Vector2 axis, int cellSize);
+
     void init();
+
     void draw();
+
     void hover(Vector2 mouse_pos);
-    std::vector<std::vector<Cell>> grid;
+
     Vector2 get(Vector2 pos);
+
+    void Search(Vector2 pos);
+
+    void Flag(Vector2 pos);
+
     private:
+    std::vector<std::vector<Cell>> grid;
     Vector2 offset;
     int row;
     int col;
     int cellSize;
-    //std::vector<std::vector<int>> grid;
+    std::vector<std::vector<int>> nearestNeighbor;
 };
