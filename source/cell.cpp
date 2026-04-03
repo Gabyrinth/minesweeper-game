@@ -17,6 +17,10 @@ void Cell::draw(){
         DrawTexture(texture, position.x, position.y, WHITE);
     }
 
+    if (isMine){
+        DrawTexture(texture, position.x, position.y, WHITE);
+    }
+
     if (neighbor > 0 && isSearched){
         DrawText(std::to_string(neighbor).c_str(),position.x, position.y, 22, RED);
     }

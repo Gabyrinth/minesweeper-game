@@ -2,6 +2,7 @@
 #include <iostream>
 #include <raylib.h>
 #include <vector>
+#include <set>
 #include <math.h>
 #include <time.h>
 
@@ -32,7 +33,7 @@ class Grid{
     int row;
     int col;
     int cellSize;
-    std::vector<std::vector<int>> mineLocation;
+    std::vector<std::pair<int,int>> mineLocation;
     std::vector<std::vector<int>> nearestNeighbor;
     std::vector<std::vector<int>> searchNeighbor;
     // private methods

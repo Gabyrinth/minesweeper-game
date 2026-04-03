@@ -68,7 +68,7 @@ void Grid::Search(Vector2 pos){
 
     if (cell.neighbor > 0) return;
     for(int i = 0;i < searchNeighbor.size(); i++){
-        Search(Vector2{pos.x + searchNeighbor[i][0], pos.y + searchNeighbor[i][1]});
+        Search(Vector2{pos.x + searchNeighbor[i][0], pos.y + searchNeighbor[i][1]}); // recursive DFS
     }
 }
 
@@ -76,16 +76,18 @@ void Grid::mineDeploy(){
     srand(time(0));
     int numberOfMines = rand() % 145;
     for(int i = 0; i < numberOfMines; i++){
-        int r = rand() % row ;
-        int c = rand() % col ;
+        int r = rand() % row;
+        int c = rand() % col;
         mineLocation.push_back({r,c});
+        Cell &cell = grid[r][c];
+        cell.mineCell();
     }
 
     for (int i = 0; i < mineLocation.size(); i++){
         for (int j = 0; j < nearestNeighbor.size(); j++){
-            int rn = mineLocation[i][0] + nearestNeighbor[j][0];
-            int cn = mineLocation[i][1] + nearestNeighbor[j][1];
-            if (rn >= 0 && rn < row && cn >= 0 && cn < col && !grid[rn][cn].isMine){
+            int rn = mineLocation[i].first + nearestNeighbor[j][0];
+            int cn = mineLocation[i].second + nearestNeighbor[j][1];
+            if (rn >= 0 && rn < row && cn >= 0 && cn < col && grid[rn][cn].isMine == false){
                 grid[rn][cn].addNeighbor();
             }
         }
