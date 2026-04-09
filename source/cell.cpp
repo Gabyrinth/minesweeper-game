@@ -18,13 +18,9 @@ void Cell::draw(){
         DrawTexture(*texture, position.x, position.y, WHITE);
     }
 
-    if (isMine){
-        DrawTexture(*texture, position.x, position.y, WHITE);
-    }
-
     if (neighbor > 0 && isSearched){
-        DrawText(std::to_string(neighbor).c_str(),position.x, position.y, 22, RED);
-    }
+        DrawText(std::to_string(neighbor).c_str(),position.x, position.y, 22, fontColor[neighbor-1]);
+    } 
 }
 
 void Cell::setTexture(Texture2D &image){
@@ -40,13 +36,12 @@ void Cell::flagCell(Texture2D &image){
 }
 
 void Cell::searchCell(){
-    tilecolor = color[2];
+    tilecolor = color[1];
     isSearched = true;
 }
 
-void Cell::mineCell(Texture2D &image){
+void Cell::mineCell(){
     isMine = true;
-    setTexture(image);
 }
 
 void Cell::addNeighbor(){

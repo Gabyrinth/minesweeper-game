@@ -22,7 +22,7 @@ struct Cell{
 
     void flagCell(Texture2D &image);
 
-    void mineCell(Texture2D &image);
+    void mineCell();
 
     void addNeighbor();
 

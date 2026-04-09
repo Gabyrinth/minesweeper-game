@@ -91,15 +91,19 @@ void Grid::Search(Vector2 pos){
 void Grid::mineDeploy(){
     srand(time(0));
     int numberOfMines = 50;
-    for(int i = 0; i < numberOfMines; i++){
+
+    while(mineLocation.size() < numberOfMines){
         int r = rand() % row;
         int c = rand() % col;
-        if (std::find(mineLocation.begin(), mineLocation.end(), std::make_pair(r,c)) != mineLocation.end()){
-            continue;
+        auto it = std::find(mineLocation.begin(), mineLocation.end(), std::make_pair(r,c));
+        if (it == mineLocation.end()){
+            mineLocation.push_back({r,c});
         }
-        mineLocation.push_back({r,c});
-        Cell &cell = grid[r][c];
-        cell.mineCell(textureMap["mine"]);
+    }
+
+    for(std::pair obj : mineLocation){
+        Cell &cell = grid[obj.first][obj.second];
+        cell.mineCell();
     }
 
     for (int i = 0; i < mineLocation.size(); i++){
