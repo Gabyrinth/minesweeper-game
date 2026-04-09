@@ -19,7 +19,7 @@ int main(){
     int col = 24;
     int gap = 2;
 
-    game.initGrid(row, col, cellSize, gap, offset);
+    game.initGrid(row, col, gap, cellSize, offset);
 
     game.mainloop();
 }

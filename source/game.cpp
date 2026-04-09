@@ -19,7 +19,8 @@ void Game::mainloop(){
         Vector2 mouse_position = GetMousePosition();
 
         if (IsMouseButtonPressed(0)) {
-            // LEFT CLICK
+            Vector2 position = grid->get(mouse_position);
+            grid->Search(position);
         }
 
         if (IsMouseButtonPressed(1)) {

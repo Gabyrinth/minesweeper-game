@@ -19,8 +19,8 @@ void Grid::init(){
     grid.resize(row);
     for(int r = 0; r < row; r++){
         for(int c = 0; c < col; c++){
-            int posX = offset.x + (r * (cellSize + gap));
-            int posY = offset.y + (c * (cellSize + gap));
+            int posX = (offset.x + (r * cellSize)) + gap;
+            int posY = (offset.y + (c * cellSize)) + gap;
             int newSize = cellSize - gap;
             grid[r].emplace_back(posX, posY, newSize);
         }
@@ -39,8 +39,8 @@ void Grid::draw(Vector2 mouse_pos){
 }
 
 void Grid::hover(Vector2 axis){
-    int posX = offset.x + (axis.x * (cellSize + gap));
-    int posY = offset.y + (axis.y * (cellSize + gap));
+    int posX = (offset.x + axis.x * cellSize) + gap;
+    int posY = (offset.y + axis.y * cellSize) + gap;
     int newSize = cellSize - gap;
     DrawRectangle(posX, posY, newSize, newSize, RED);
 }
