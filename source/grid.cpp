@@ -1,8 +1,9 @@
 #include "grid.hpp"
 
-Grid::Grid(Vector2 offset, Vector2 axis, int cellSize){
+Grid::Grid(Vector2 offset, Vector2 axis, int cellSize, int gap){
     this->offset = offset;
     this->cellSize = cellSize;
+    this->gap = gap;
     row = axis.x;
     col = axis.y;
 
@@ -18,28 +19,36 @@ void Grid::init(){
     grid.resize(row);
     for(int r = 0; r < row; r++){
         for(int c = 0; c < col; c++){
-            grid[r].emplace_back(offset.x + r * cellSize + 4, offset.y + c * cellSize + 4, cellSize - 4);
+            int posX = offset.x + (r * (cellSize + gap));
+            int posY = offset.y + (c * (cellSize + gap));
+            int newSize = cellSize - gap;
+            grid[r].emplace_back(posX, posY, newSize);
         }
     }
 }
-// draw rectangles at screen
-void Grid::draw(){
+// DRAW AT SCREEN
+void Grid::draw(Vector2 mouse_pos){
+    Vector2 axis = this->get(mouse_pos);
     for(int r = 0; r < row; r++){
         for (int c = 0; c < row; c++){
             grid[r][c].draw();
         }
     }
-}
-// 
-void Grid::hover(Vector2 mouse_pos){
-    Vector2 axis = this->get(mouse_pos);
-    DrawRectangle(offset.x+axis.x * cellSize+4,offset.y+ axis.y * cellSize+4, cellSize-4,cellSize-4, RED);
+    // HOVER EFFECT
+    hover(axis);
 }
 
+void Grid::hover(Vector2 axis){
+    int posX = offset.x + (axis.x * (cellSize + gap));
+    int posY = offset.y + (axis.y * (cellSize + gap));
+    int newSize = cellSize - gap;
+    DrawRectangle(posX, posY, newSize, newSize, RED);
+}
+
+// GET THE ROW AND COL: RETURN VECTOR2
 Vector2 Grid::get(Vector2 pos){
-    int r= (int)std::floor((pos.x-offset.x) / cellSize);
-    int c = (int)std::floor((pos.y-offset.y) / cellSize);
-
+    int r= (int)std::floor((pos.x-offset.x) / (cellSize));
+    int c = (int)std::floor((pos.y-offset.y) / (cellSize));
     // clamp
     r = std::max(0, std::min(r, row - 1));
     c = std::max(0, std::min(c, col - 1));

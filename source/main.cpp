@@ -5,7 +5,7 @@
 
 using namespace std;
 
-const string TITLE = "Minesweeper";
+const string TITLE = "Minesweeper Game";
 const int WIDTH = 772;
 const int HEIGHT = 847;
 
@@ -17,9 +17,9 @@ int main(){
     int cellSize = 32;
     int row = 24;
     int col = 24;
+    int gap = 2;
 
-    game.initGrid(row,col,cellSize, offset);
-
+    game.initGrid(row, col, cellSize, gap, offset);
 
     game.mainloop();
 }

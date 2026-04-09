@@ -14,7 +14,7 @@ class Game{
 
     void mainloop();
 
-    void initGrid(int row, int col, int cellSize, Vector2 offset);
+    void initGrid(int row, int col, int cellSize, int gap, Vector2 offset);
     private:
 
     void gameOver();

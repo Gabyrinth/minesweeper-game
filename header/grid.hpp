@@ -12,13 +12,13 @@
 class Grid{
     public:
 
-    Grid(Vector2 offset, Vector2 axis, int cellSize);
+    Grid(Vector2 offset, Vector2 axis, int cellSize, int gap);
 
     void init();
 
-    void draw();
+    void draw(Vector2 mouse_pos);
 
-    void hover(Vector2 mouse_pos);
+    void hover(Vector2 axis);
 
     Vector2 get(Vector2 pos);
 
@@ -32,6 +32,7 @@ class Grid{
     Vector2 offset;
     int row;
     int col;
+    int gap;
     int cellSize;
     std::vector<std::pair<int,int>> mineLocation;
     std::vector<std::vector<int>> nearestNeighbor;
