@@ -17,7 +17,7 @@ int main(){
     int cellSize = 32;
     int row = 24;
     int col = 24;
-    int gap = 2;
+    int gap = 4;
 
     game.initGrid(row, col, gap, cellSize, offset);
 

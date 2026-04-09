@@ -8,17 +8,18 @@ Cell::Cell(int x, int y, int size){
     neighbor = 0;
     isSearched = false;
     tilecolor = color[0];
+    texture = nullptr;
 }
 
 void Cell::draw(){
     DrawRectangle(position.x, position.y, size, size, tilecolor);
 
     if (isFlagged){
-        DrawTexture(texture, position.x, position.y, WHITE);
+        DrawTexture(*texture, position.x, position.y, WHITE);
     }
 
     if (isMine){
-        DrawTexture(texture, position.x, position.y, WHITE);
+        DrawTexture(*texture, position.x, position.y, WHITE);
     }
 
     if (neighbor > 0 && isSearched){
@@ -26,11 +27,15 @@ void Cell::draw(){
     }
 }
 
-void Cell::flagCell(){
+void Cell::setTexture(Texture2D &image){
+    texture = &image;
+}
+
+void Cell::flagCell(Texture2D &image){
     if (isSearched) return;
     if (isFlagged) return;
 
-    texture = getImages()[1];
+    setTexture(image);
     isFlagged = true;
 }
 
@@ -39,9 +44,9 @@ void Cell::searchCell(){
     isSearched = true;
 }
 
-void Cell::mineCell(){
+void Cell::mineCell(Texture2D &image){
     isMine = true;
-    texture = getImages()[0];
+    setTexture(image);
 }
 
 void Cell::addNeighbor(){

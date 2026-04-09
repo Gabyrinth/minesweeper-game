@@ -1,8 +1,8 @@
 #pragma once
 #include <raylib.h>
 #include <string>
+
 #include "colors.hpp"
-#include "image.hpp"
 
 struct Cell{
     bool isMine;
@@ -12,19 +12,19 @@ struct Cell{
     Color tilecolor;
     Vector2 position;
     int size;
-    Texture2D texture;
+    Texture2D *texture;
 
     Cell(int x, int y, int size); // instructor
 
     void draw();
 
-    void drawTexture();
-
     void searchCell();
 
-    void flagCell();
+    void flagCell(Texture2D &image);
 
-    void mineCell();
+    void mineCell(Texture2D &image);
 
     void addNeighbor();
+
+    void setTexture(Texture2D &image);
 };

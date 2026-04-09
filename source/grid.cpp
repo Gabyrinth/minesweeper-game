@@ -4,17 +4,21 @@ Grid::Grid(Vector2 offset, Vector2 axis, int cellSize, int gap){
     this->offset = offset;
     this->cellSize = cellSize;
     this->gap = gap;
+
     row = axis.x;
     col = axis.y;
-
+    // Initialize neighbor
     nearestNeighbor = {{-1,-1},{0,-1},{1,-1},{-1,0}, {1,0},{-1,1}, {0,1}, {1,1}};
     searchNeighbor = {{0,-1}, {-1,0}, {1,0}, {0,1}};
-    
+    // Load texture
+    textureMap["mine"] = LoadTexture("../image/mine.png");
+    textureMap["flag"] = LoadTexture("../image/flag.png");
+
     init();
     mineDeploy();
 }
 
-// can be use to reset
+// INITIALIZE THE GRID
 void Grid::init(){
     grid.resize(row);
     for(int r = 0; r < row; r++){
@@ -26,16 +30,19 @@ void Grid::init(){
         }
     }
 }
+
 // DRAW AT SCREEN
 void Grid::draw(Vector2 mouse_pos){
+    // HOVER EFFECT
     Vector2 axis = this->get(mouse_pos);
+    hover(axis);
     for(int r = 0; r < row; r++){
         for (int c = 0; c < row; c++){
             grid[r][c].draw();
         }
     }
-    // HOVER EFFECT
-    hover(axis);
+    
+    
 }
 
 void Grid::hover(Vector2 axis){
@@ -57,7 +64,7 @@ Vector2 Grid::get(Vector2 pos){
 }
 
 void Grid::Flag(Vector2 pos){
-    grid[pos.x][pos.y].flagCell();
+    grid[pos.x][pos.y].flagCell(textureMap["flag"]);
 }
 
 void Grid::Search(Vector2 pos){
@@ -83,13 +90,16 @@ void Grid::Search(Vector2 pos){
 
 void Grid::mineDeploy(){
     srand(time(0));
-    int numberOfMines = rand() % 145;
+    int numberOfMines = 50;
     for(int i = 0; i < numberOfMines; i++){
         int r = rand() % row;
         int c = rand() % col;
+        if (std::find(mineLocation.begin(), mineLocation.end(), std::make_pair(r,c)) != mineLocation.end()){
+            continue;
+        }
         mineLocation.push_back({r,c});
         Cell &cell = grid[r][c];
-        cell.mineCell();
+        cell.mineCell(textureMap["mine"]);
     }
 
     for (int i = 0; i < mineLocation.size(); i++){

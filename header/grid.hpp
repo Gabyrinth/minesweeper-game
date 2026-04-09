@@ -2,9 +2,11 @@
 #include <iostream>
 #include <raylib.h>
 #include <vector>
-#include <set>
+#include <map>
 #include <math.h>
 #include <time.h>
+#include <string>
+#include <algorithm>
 
 #include "colors.hpp"
 #include "cell.hpp"
@@ -13,8 +15,6 @@ class Grid{
     public:
 
     Grid(Vector2 offset, Vector2 axis, int cellSize, int gap);
-
-    void init();
 
     void draw(Vector2 mouse_pos);
 
@@ -37,6 +37,9 @@ class Grid{
     std::vector<std::pair<int,int>> mineLocation;
     std::vector<std::vector<int>> nearestNeighbor;
     std::vector<std::vector<int>> searchNeighbor;
+    std::map<std::string, Texture2D> textureMap;
     // private methods
     void mineDeploy();
+
+    void init();
 };
