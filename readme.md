@@ -5,5 +5,4 @@ A recreation of the classic Minesweeper game. Uncover tiles, avoid hidden mines,
 
 ## Technology
 - C++ - main language of the project
-- STL - container or 
 - raylib - used for graphics and user inputs
